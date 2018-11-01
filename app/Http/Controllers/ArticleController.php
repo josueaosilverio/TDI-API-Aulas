@@ -240,10 +240,10 @@ class ArticleController extends Controller
 
     public function update(ArticleUpdateRequest $request, Article $article)
     {
-
-        $data = $request->only('title', 'description', 'image', 'user_id');
+        $data = $request->only(['title', 'description', 'image', 'user_id']);
         $path = $request->file('image')->store('articleImages');
         $data['image'] = $path;
+
 
         $article->title = $data['title'];
         $article->description = $data['description'];
