@@ -6,9 +6,15 @@ use App\Article;
 use App\Http\Requests\UserUpdateRequest;
 use App\User;
 use Validator;
+use Auth;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * @OA\Get(
      *      path="/user",
@@ -331,4 +337,19 @@ class UserController extends Controller
         return response($message, 200)
             ->header('Content-Type', "application/json; charset=utf-8");
     }
+
+    public function getAuth()
+    {
+        $result = Auth::User();
+
+        $message = [
+            'status' => '200',
+            'message' => 'Operation Successful',
+            'data' => $result
+        ];
+
+        return response($message, 200)
+            ->header('Content-Type', "application/json; charset=utf-8");
+    }
+
 }
